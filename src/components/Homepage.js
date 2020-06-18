@@ -3,6 +3,7 @@ import LineChart from './LineChart';
 import PopoverItem from './PopoverItem';
 import AlertSuccess from './AlertSuccess';
 import CarsGrid from './CarsGrid';
+import { CButton, CPopover } from '@coreui/react';
 
 const Homepage = () => {
     const [notificationNumb, setNotificationNumber] = useState(0);
@@ -73,10 +74,22 @@ const Homepage = () => {
             </div>
             <div className="col">
                 {successMessage && <AlertSuccess></AlertSuccess>}
-                <PopoverItem key={1} item={{
+                {/* <PopoverItem key={1} item={{
                     placement: 'bottom',
                     text: 'Mostra Successo!',
-                }} successAlertFunc = {setSuccessMessage} showSuccessAlert={successMessage} id={1}></PopoverItem>
+                }} successAlertFunc = {setSuccessMessage} showSuccessAlert={successMessage} id={1}></PopoverItem> */}
+                <CPopover header="Mostra il successo!"
+                    content={`Complimenti!`}
+                    placement={'right'}
+                    interactive={true}
+                    trigger="click"
+                  >
+                    <CButton color="primary" onClick={()=>{
+                        setSuccessMessage(!successMessage);
+                    }}>
+                      { "Top" }
+                    </CButton>
+                  </CPopover>
             </div>
             <hr></hr>
             <br></br>

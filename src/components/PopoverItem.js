@@ -11,12 +11,12 @@ const PopoverItem = (props)=> {
                 
                 <CPopover header="Popover header" content="Potresti avere un enorme successo!">
                     
-                    {/* <CButton className="btn btn-lg btn-danger" color="secondary" onClick={()=>{
+                    <CButton className="btn btn-lg btn-danger" color="secondary" onClick={()=>{
                         props.successAlertFunc(!props.showSuccessAlert);
                         }}>
                         {props.item.text}
-                    </CButton> */}
-                    <a href="#"> Popover example </a>
+                    </CButton>
+                    {/* <a href="#"> Popover example </a> */}
                 </CPopover>
             </div>
         </span>

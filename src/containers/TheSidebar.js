@@ -10,9 +10,11 @@ import {
   CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
+  CImg,
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
+import fullLogo from '../assets/logo/imole-logo.png'
 
 // sidebar nav config
 import navigation from './_nav'
@@ -27,11 +29,13 @@ const TheSidebar = () => {
       onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
+        {/* <CIcon
           className="c-sidebar-brand-full"
           name="logo-negative"
           height={35}
-        />
+        /> */}
+        <CImg className="c-sidebar-brand-full" src={fullLogo} width="200px" height="80px" />
+
         <CIcon
           className="c-sidebar-brand-minimized"
           name="sygnet"

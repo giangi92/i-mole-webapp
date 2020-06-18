@@ -19,7 +19,7 @@ export default [
     _tag: 'CSidebarNavItem',
     name: 'Info',
     to: '/about',
-    icon: 'cil-info',
+    icon: 'cil-pencil',
   },
   {
     _tag: 'CSidebarNavDropdown',
