@@ -1,15 +1,41 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
   CBadge,
   CDropdown,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CImg
+  CImg,
+  CLink
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import {
+  Redirect
+} from 'react-router-dom'
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (user) => {
+
+  const [logOut, setLogout] = useState(false);
+    let loggedUser = user.user.userInfo;
+
+    if (!loggedUser) {
+        loggedUser = JSON.parse(localStorage.getItem('user'));
+    }
+
+    if (logOut) {
+        console.log('Effettuo logout dallo header');
+
+        localStorage.removeItem('sessionToken');
+        user.user.setLogged(false);
+        setLogout(false);
+
+        return (
+            <div>
+                <Redirect to='/login' />
+            </div>
+        )
+    }
+
   return (
     <CDropdown
       inNav
@@ -35,12 +61,14 @@ const TheHeaderDropdown = () => {
         >
           <strong>Impostazioni</strong>
         </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-user" className="mfe-2" />Profilo
-        </CDropdownItem>
-        <CDropdownItem>
+          <CDropdownItem>
+            <CLink to='/userInfo'>
+              <CIcon name="cil-user" className="mfe-2" /> {loggedUser.name} {loggedUser.surname}
+            </CLink>
+          </CDropdownItem>
+        <CDropdownItem onClick={e => setLogout(true)}>
           <CIcon name="cil-lock-locked" className="mfe-2" /> 
-          Log-Out
+          Logout
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

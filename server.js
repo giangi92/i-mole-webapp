@@ -135,7 +135,7 @@ app.post('/user/login', (req, res) => {
     if (resp) {
       let dbuser = resp;
       console.log('Lo abbiamo trovato!!', dbuser);
-      dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '7 days' });
+      dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '2 minutes' });
 
       dbuser.save((saveErr, saveResp) => {
         if (saveErr) {

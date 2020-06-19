@@ -50,6 +50,7 @@ const TokenChecker = () => {
             return false;
         }
     }
+    return false;
 }
 
 export { TokenChecker, TokenCheckerRedirect as default };
