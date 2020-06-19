@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { CButton, CCard, CCardBody, CCardGroup, CCol, CContainer, CForm, CInput, CInputGroup, CInputGroupText, CInputGroupPrepend, CRow } from '@coreui/react';
 import logo from '../assets/logo/imole-logo.png';
 import { AppNavbarBrand } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
 
 const UserLogin = (userState) => {
     var [email, setEmail] = useState('');
@@ -80,7 +81,8 @@ const UserLogin = (userState) => {
                                                 <CInputGroup className="mb-3">
                                                     <CInputGroupPrepend addonType="prepend">
                                                         <CInputGroupText>
-                                                            <i className="icon-user"></i>
+                                                            {/* <i className="icon-user"></i> */}
+                                                            <CIcon name={'cilUser'}></CIcon>
                                                         </CInputGroupText>
                                                     </CInputGroupPrepend>
                                                     <CInput type="email" placeholder="Email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -88,7 +90,7 @@ const UserLogin = (userState) => {
                                                 <CInputGroup className="mb-4">
                                                     <CInputGroupPrepend addonType="prepend">
                                                         <CInputGroupText>
-                                                            <i className="icon-lock"></i>
+                                                            <CIcon name={'cil-lock-locked'}></CIcon>
                                                         </CInputGroupText>
                                                     </CInputGroupPrepend>
                                                     <CInput type="password" placeholder="Password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -110,7 +112,7 @@ const UserLogin = (userState) => {
                                                 <h2>Sign up</h2>
                                                 <p>Registrati ad I-Mole</p>
                                                 <Link to="/userRegister">
-                                                    <CButton CColor="primary" className="mt-3" active>
+                                                    <CButton color="success" className="m-3" active>
                                                         Register Now!
                                                     </CButton>
                                                 </Link>

@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import logo from '../assets/logo/imole-logo.png';
 
 import { CAlert, CButton, CCard, CCardBody, CCardFooter, CCol, CContainer, CForm, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CRow } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
 
 const UserRegister = () => {
 
@@ -81,13 +82,13 @@ const UserRegister = () => {
               <CCol md="9" lg="7" xl="6">
                 <CCard className="mx-4">
                   <CCardBody className="p-4">
-                    <CForm onSubmit={(e) => submitCredentials(e)}>
+                    <CForm>
                       <h1>Register</h1>
                       <p className="text-muted">Create your account</p>
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend addonType="prepend">
                           <CInputGroupText>
-                            <i className="icon-user"></i>
+                            <CIcon name={'cil-user'}></CIcon>
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
@@ -95,7 +96,7 @@ const UserRegister = () => {
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend addonType="prepend">
                           <CInputGroupText>
-                            <i className="icon-user"></i>
+                            <CIcon name={'cil-user'}></CIcon>
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput type="text" placeholder="Surname" value={surname} onChange={(e) => setSurname(e.target.value)} autoComplete="surname" />
@@ -105,12 +106,12 @@ const UserRegister = () => {
                         <CInputGroupPrepend addonType="prepend">
                           <CInputGroupText>@</CInputGroupText>
                         </CInputGroupPrepend>
-                        <CInput type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
+                        <CInput type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
                       </CInputGroup>
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend addonType="prepend">
                           <CInputGroupText>
-                            <i className="icon-lock"></i>
+                            <CIcon name={'cil-lock-locked'}></CIcon>
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" />
@@ -119,12 +120,12 @@ const UserRegister = () => {
                       <CInputGroup className="mb-4">
                         <CInputGroupPrepend addonType="prepend">
                           <CInputGroupText>
-                            <i className="icon-lock"></i>
+                            <CIcon name={'cil-lock-locked'}></CIcon>
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput type="password" placeholder="Repeat password" value={retypePassword} onChange={(e) => setRetypePassword(e.target.value)} autoComplete="new-password" />
                       </CInputGroup>
-                      <CButton CColor="success" block>Create Account</CButton>
+                      <CButton color="success" block onClick={(e) => submitCredentials(e)}>Create Account</CButton>
                     </CForm>
                   </CCardBody>
                   <CCardFooter className="p-4">
