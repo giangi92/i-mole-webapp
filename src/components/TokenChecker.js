@@ -44,6 +44,8 @@ const TokenChecker = () => {
             console.log("verifica del token:", isCorrect);
             if (isCorrect) {
                 return true
+            }else{
+                return false;
             }
         } catch (error) {
             console.log('errore nella verifica token:', error);

@@ -47,18 +47,22 @@ const UserInfo = (user) => {
                                             <tr>
                                                 <td>Nome</td>
                                                 <td><strong>{userInfo.name}</strong></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>Cognome</td>
                                                 <td><strong>{userInfo.surname}</strong></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>Email</td>
                                                 <td><strong>{userInfo.email}</strong></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>Password</td>
-                                                <td><strong>{userInfo.password}</strong> <CButton> Modifica</CButton></td>
+                                                <td><strong>{userInfo.password}</strong></td>
+                                                <td> <CButton> Modifica</CButton></td>
                                             </tr>
                                         </tbody>
                                     </table>
