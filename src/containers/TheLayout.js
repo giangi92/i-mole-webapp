@@ -7,33 +7,38 @@ import {
   TheLogin
 } from './index'
 
-// import {
-//   Redirect,
-//   Route,
-//   Switch
-// } from 'react-router-dom'
+import { Redirect } from 'react-router';
 
-import TokenCheckerRedirect,{TokenChecker} from '../components/TokenChecker'
-// import UserLogin from '../components/UserLogin'
-// import UserRegister from '../components/UserRegister'
-
+import TokenCheckerRedirect,{TokenChecker, TokenCheckerSetState} from '../components/TokenChecker'
 
 const TheLayout = () => {
 
-  const [logged, setLogged] = useState(TokenChecker());
-    let [loggedUser, setLoggedUser] = useState(undefined);
-    //setLogged(TokenChecker());
-    useEffect(() => {
+  let verify = TokenChecker()
+  const [logged, setLogged] = useState(verify);
+  let [loggedUser, setLoggedUser] = useState(undefined);
 
-        console.log('Utente è loggato?', logged);
-        if(logged)
-          setLoggedUser(JSON.parse(localStorage.getItem('user')));
+  if(logged && !verify){
+    setLogged(false);
+  }
 
-    },[logged])
+  useEffect(() => {
+
+      console.log('Utente è loggato?', logged);
+      if(logged)
+        setLoggedUser(JSON.parse(localStorage.getItem('user')));
+
+  },[logged])
+
 
   return (
     <div>
-      {logged ? (
+      {!logged ? (
+        <div>
+          <TheLogin isLogged={logged} setLogged={setLogged} setLoggedUser={setLoggedUser}></TheLogin>
+        </div>
+      )
+      
+      : (
         <div className="c-app c-default-layout">
         <TheSidebar/>
         <div className="c-wrapper">
@@ -44,11 +49,6 @@ const TheLayout = () => {
           <TheFooter/>
         </div>
       </div>
-      )
-      : (
-        <div>
-          <TheLogin isLogged={logged} setLogged={setLogged} setLoggedUser={setLoggedUser}></TheLogin>
-        </div>
       )}
     </div>
     

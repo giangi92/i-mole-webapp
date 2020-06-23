@@ -93,8 +93,15 @@ const Homepage = () => {
             </div>
             <hr></hr>
             <br></br>
-            <h3>Le tue auto personali</h3>
-            <CarsGrid></CarsGrid>
+            <div>
+                <h3>Le tue auto personali</h3>
+                <div>
+                    <CarsGrid></CarsGrid>
+                </div>
+            </div>
+            <hr></hr>
+            <br></br>
+            <br></br>
         </div>
     )
 }

@@ -96,9 +96,7 @@ const Employees = () => {
         let auth = '';
         if (loggedUser){
             console.log("Ciao",loggedUser.name);
-            
-            console.log('l utente è loggato correttamente, accessToken è:',loggedUser.sessionToken);
-            
+                        
             auth = 'JWT ' + loggedUser.sessionToken;
         }else{
             console.log('devi ancora loggarti');

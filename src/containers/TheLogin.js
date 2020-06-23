@@ -21,7 +21,7 @@ const TheLogin = (user) => {
                             name={route.name}
                             render={props => (
                             <CFade>
-                                <route.component isLogged={user.logged} setLogged={user.setLogged} setLoggedUser={user.setLoggedUser} {...props} />
+                                <route.component isLogged={user.isLogged} setLogged={user.setLogged} setLoggedUser={user.setLoggedUser} {...props} />
                             </CFade>
                             )} />
                         )

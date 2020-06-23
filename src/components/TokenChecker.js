@@ -29,7 +29,7 @@ const TokenCheckerRedirect = (redirectLocation) => {
         
         return (
             <div>
-                <Redirect to="/" />
+                <Redirect to="/loginUser" />
             </div>
         )
     }    
@@ -39,20 +39,45 @@ const TokenChecker = () => {
     const sessionToken = localStorage.getItem("sessionToken");
     if (sessionToken) {
         try {
+            
+            const isCorrect = jwt.verify(sessionToken, 'secret',(err, decoded)=>{
+                console.log('controllo del token, errore?',err);
+                
+                if(err)return false 
+                else return true;
 
-            const isCorrect = jwt.verify(sessionToken, 'secret')
+            })
             console.log("verifica del token:", isCorrect);
-            if (isCorrect) {
-                return true
-            }else{
-                return false;
-            }
+            return isCorrect
         } catch (error) {
-            console.log('errore nella verifica token:', error);
+            // console.log('errore nella verifica token:', error);
             return false;
         }
     }
     return false;
 }
 
-export { TokenChecker, TokenCheckerRedirect as default };
+const TokenCheckerSetState = (state) => {
+    const sessionToken = localStorage.getItem("sessionToken");
+    if (sessionToken) {
+        try {
+            
+            const isCorrect = jwt.verify(sessionToken, 'secret',(err, decoded)=>{
+                console.log('controllo del token, errore?',err);
+                
+                if(err)state.setLogged(false) 
+                else state.setLogged(true)
+
+                return;
+
+            })
+            
+        } catch (error) {
+            // console.log('errore nella verifica token:', error);
+            state.setLogged(false)
+        }
+    }
+    state.setLogged(false)
+}
+
+export { TokenChecker, TokenCheckerSetState, TokenCheckerRedirect as default };

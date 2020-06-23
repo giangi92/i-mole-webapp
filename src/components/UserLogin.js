@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { CButton, CCard, CCardBody, CCardGroup, CCol, CContainer, CForm, CInput, CInputGroup, CInputGroupText, CInputGroupPrepend, CRow } from '@coreui/react';
 import logo from '../assets/logo/imole-logo.png';
-import { AppNavbarBrand } from '@coreui/react';
+import { AppNavbarBrand, CAlert } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 
 const UserLogin = (userState) => {
     var [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(true);
     const [goToDashboard, setGoToDashboard] = useState(false);
+
+    let sessionExpired = false;
+    let showSessionExpiredMessage = false;
+
+    if(localStorage.getItem("sessionToken") && !userState.logged){
+        showSessionExpiredMessage = true;
+        console.log('Sessione scaduta, mostrare messaggio');
+        
+    }
 
     var [password, setPassword] = useState('');
     console.log("userState", userState.isLogged);
@@ -67,6 +76,7 @@ const UserLogin = (userState) => {
                     {/* <h1 className='display-1'>Giangisoft</h1> */}
                     <img src={logo} alt="Imole-logo"></img>
                 </div>
+                
                 <div className="align-items-center">
                     <CContainer>
                         <CRow className="justify-content-center">
@@ -74,10 +84,14 @@ const UserLogin = (userState) => {
                                 <CCardGroup>
                                     <CCard className="p-4">
                                         <CCardBody>
+                                        {showSessionExpiredMessage && 
+                                            <CAlert color="info" closeButton fade>
+                                                Sessione scaduta, rieffettuare l'accesso
+                                            </CAlert>}
                                             <CForm>
                                                 <h1>Login</h1>
                                                 <p className="text-muted">Sign In to your account</p>
-                                                {!validEmail && <p className="red-border">Email or password aint correct</p>}
+                                                {!validEmail && <p className="red-border">Email o password non corrette</p>}
                                                 <CInputGroup className="mb-3">
                                                     <CInputGroupPrepend addonType="prepend">
                                                         <CInputGroupText>

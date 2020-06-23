@@ -6,6 +6,7 @@ const uri = "mongodb+srv://Gianluca:Bragraprecia19@giangi-rjfa9.mongodb.net/test
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const userRoutes = require('./server-modules/user-modules')
 
 var JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -49,7 +50,7 @@ app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 // app.use(express.session({ secret: 'secret' }));
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(userRoutes)
 
 app.post('/mongo/addcat', (req, res) => {
   try {
@@ -124,67 +125,67 @@ app.post('/employees/update', (req, res) => {
 
 })
 
-app.post('/user/login', (req, res) => {
+// app.post('/user/login', (req, res) => {
 
-  const user = req.body;
-  User.findOne({ email: user.email, password: user.password }, (err, resp) => {
-    if (err) {
-      res.status(404).send('Error', err);
-    }
+//   const user = req.body;
+//   User.findOne({ email: user.email, password: user.password }, (err, resp) => {
+//     if (err) {
+//       res.status(404).send('Error', err);
+//     }
 
-    if (resp) {
-      let dbuser = resp;
-      console.log('Lo abbiamo trovato!!', dbuser);
-      dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '2 minutes' });
+//     if (resp) {
+//       let dbuser = resp;
+//       console.log('Lo abbiamo trovato!!', dbuser);
+//       dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '2 minutes' });
 
-      dbuser.save((saveErr, saveResp) => {
-        if (saveErr) {
-          res.status(500).send(saveErr);
-        }
-        res.status(200).send(dbuser);
-      })
-    } else {
-      //altrimenti non ho trovato nessuno
-      res.status(404).send({error:"Nothing found"});
-    }
+//       dbuser.save((saveErr, saveResp) => {
+//         if (saveErr) {
+//           res.status(500).send(saveErr);
+//         }
+//         res.status(200).send(dbuser);
+//       })
+//     } else {
+//       //altrimenti non ho trovato nessuno
+//       res.status(404).send({error:"Nothing found"});
+//     }
 
-  })
+//   })
 
-})
+// })
 
-app.post('/user/register', (req, res) => {
+// app.post('/user/register', (req, res) => {
 
-  const user = req.body;
-  User.findOne({ email: user.email }, (err, resp) => {
-    if (err) {
-      res.status(404).send('Error', err);
-    }
+//   const user = req.body;
+//   User.findOne({ email: user.email }, (err, resp) => {
+//     if (err) {
+//       res.status(404).send('Error', err);
+//     }
 
-    if (resp) {
-      let dbuser = resp;
-      console.log('Email già presente', dbuser);
-      res.status(409).send({error:{message:'Email già in uso.'}})
+//     if (resp) {
+//       let dbuser = resp;
+//       console.log('Email già presente', dbuser);
+//       res.status(409).send({error:{message:'Email già in uso.'}})
       
-    } else {
-      //altrimenti non ho trovato nessuno e posso procedere con la registrazione
-      User.create({
-        name:user.name,
-        surname:user.surname,
-        email:user.email,
-        password:user.password,
-        sessionToken: jwt.sign({ email: user.email }, 'secret', { expiresIn: '7d' })
-      },(insertErr, insertRes)=>{
-        if(insertErr){
-          console.log(insertErr);
-          res.status(500).send(insertErr);
-        }
-        res.status(200).send(insertRes);
-      })
-    }
+//     } else {
+//       //altrimenti non ho trovato nessuno e posso procedere con la registrazione
+//       User.create({
+//         name:user.name,
+//         surname:user.surname,
+//         email:user.email,
+//         password:user.password,
+//         sessionToken: jwt.sign({ email: user.email }, 'secret', { expiresIn: '7d' })
+//       },(insertErr, insertRes)=>{
+//         if(insertErr){
+//           console.log(insertErr);
+//           res.status(500).send(insertErr);
+//         }
+//         res.status(200).send(insertRes);
+//       })
+//     }
 
-  })
+//   })
 
-})
+// })
 
 app.post('/employees/generaterandom/:number', (req, res) => {
   try {

@@ -31,7 +31,7 @@ const TheHeaderDropdown = (user) => {
 
         return (
             <div>
-                <Redirect to='/' />
+                <Redirect to='/userLogin' />
             </div>
         )
     }
