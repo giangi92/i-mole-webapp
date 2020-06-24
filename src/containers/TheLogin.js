@@ -7,7 +7,7 @@ import {
   } from 'react-router-dom'
 import { CContainer, CFade } from '@coreui/react'
 
-const TheLogin = (user) => {
+const TheLogin = (props) => {
     return (
         <div>
             <CContainer fluid>
@@ -21,7 +21,7 @@ const TheLogin = (user) => {
                             name={route.name}
                             render={props => (
                             <CFade>
-                                <route.component isLogged={user.isLogged} setLogged={user.setLogged} setLoggedUser={user.setLoggedUser} {...props} />
+                                <route.component {...props} />
                             </CFade>
                             )} />
                         )

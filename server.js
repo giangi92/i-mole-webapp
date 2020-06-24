@@ -17,7 +17,7 @@ opts.secretOrKey = 'secret';
 passport.use('jwt',new JwtStrategy(opts, function (jwt_payload, done) {
   console.log("jwt payload più interno:",jwt_payload);
   
-  User.findOne({ accessToken: jwt_payload.accessToken }, function (err, user) {
+  userRoutes.User.findOne({ accessToken: jwt_payload.accessToken }, function (err, user) {
     if (err) {
       return done(err, false);
     }

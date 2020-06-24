@@ -7,7 +7,7 @@ import {
   TheLogin
 } from './index'
 
-import { Redirect } from 'react-router';
+import UserContext from '../Contexts/UserContext'
 
 import TokenCheckerRedirect,{TokenChecker, TokenCheckerSetState} from '../components/TokenChecker'
 
@@ -16,6 +16,7 @@ const TheLayout = () => {
   let verify = TokenChecker()
   const [logged, setLogged] = useState(verify);
   let [loggedUser, setLoggedUser] = useState(undefined);
+  let contextObject = {};
 
   if(logged && !verify){
     setLogged(false);
@@ -29,27 +30,33 @@ const TheLayout = () => {
 
   },[logged])
 
+  contextObject.isLogged = logged;
+  contextObject.setLogged = setLogged;
+  contextObject.setLoggedUser = setLoggedUser;
 
   return (
     <div>
-      {!logged ? (
-        <div>
-          <TheLogin isLogged={logged} setLogged={setLogged} setLoggedUser={setLoggedUser}></TheLogin>
-        </div>
-      )
-      
-      : (
-        <div className="c-app c-default-layout">
-        <TheSidebar/>
-        <div className="c-wrapper">
-          <TheHeader isLogged={logged} setLogged={setLogged} userInfo = {loggedUser} />
-          <div className="c-body">
-            <TheContent/>
+      <UserContext.Provider value={contextObject}>
+        {!logged ? (
+          <div>
+            <TheLogin></TheLogin>
           </div>
-          <TheFooter/>
+        )
+        
+        : (
+          <div className="c-app c-default-layout">
+          <TheSidebar/>
+          <div className="c-wrapper">
+            <TheHeader isLogged={logged} setLogged={setLogged} userInfo = {loggedUser} />
+            <div className="c-body">
+              <TheContent/>
+            </div>
+            <TheFooter/>
+          </div>
         </div>
-      </div>
-      )}
+        )}
+      </UserContext.Provider>
+      
     </div>
     
   )

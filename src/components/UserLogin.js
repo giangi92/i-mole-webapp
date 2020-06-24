@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { CButton, CCard, CCardBody, CCardGroup, CCol, CContainer, CForm, CInput, CInputGroup, CInputGroupText, CInputGroupPrepend, CRow } from '@coreui/react';
 import logo from '../assets/logo/imole-logo.png';
 import { AppNavbarBrand, CAlert } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import UserContext from '../Contexts/UserContext'
 
-const UserLogin = (userState) => {
+const UserLogin = () => {
     var [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(true);
     const [goToDashboard, setGoToDashboard] = useState(false);
@@ -13,16 +14,18 @@ const UserLogin = (userState) => {
     let sessionExpired = false;
     let showSessionExpiredMessage = false;
 
-    if(localStorage.getItem("sessionToken") && !userState.logged){
+    let userContext = useContext(UserContext)
+
+    if(localStorage.getItem("sessionToken") && !userContext.logged){
         showSessionExpiredMessage = true;
         console.log('Sessione scaduta, mostrare messaggio');
         
     }
 
     var [password, setPassword] = useState('');
-    console.log("userState", userState.isLogged);
+    console.log("userState", userContext.isLogged);
 
-    if (userState.isLogged) {
+    if (userContext.isLogged) {
         return (
             <div>
                 <Redirect to="/dashboard" />
@@ -55,10 +58,10 @@ const UserLogin = (userState) => {
                     localStorage.setItem('sessionToken', data.sessionToken);
                     console.log(data);
                     // const user = new User(data);
-                    userState.setLoggedUser(data);
+                    userContext.setLoggedUser(data);
                     localStorage.setItem('user', JSON.stringify(data));
                     setGoToDashboard(true);
-                    userState.setLogged(true);
+                    userContext.setLogged(true);
                     // console.log(localStorage.getItem("sessionToken"));
                 }
             })
