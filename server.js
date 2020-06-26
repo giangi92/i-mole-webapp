@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userRoutes = require('./server-modules/user-modules')
+const User = require('./server-modules/Models/UserModel')
 
 var JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -17,18 +18,24 @@ opts.secretOrKey = 'secret';
 passport.use('jwt',new JwtStrategy(opts, function (jwt_payload, done) {
   console.log("jwt payload più interno:",jwt_payload);
   
-  userRoutes.User.findOne({ accessToken: jwt_payload.accessToken }, function (err, user) {
+  User.findOne({ email: jwt_payload.email }, function (err, user) {
     if (err) {
+      console.log('Errore di connessione');
+      
       return done(err, false);
     }
     if (user) {
+      console.log('Utente loggato correttamente:', user);
       return done(null, user);
     } else {
+      console.log('Nessun utente trovato, rieffettuare login');
       return done(null, false);
       // or you could create a new account
     }
-  });
-}));
+  }
+  );
+}
+));
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
   console.log('Connected to DB');

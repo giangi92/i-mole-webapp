@@ -117,7 +117,9 @@ const UserLogin = () => {
                                                         <CButton onClick={(e)=>submitCredentials(e)} CColor="primary" className="px-4">Login</CButton>
                                                     </CCol>
                                                     <CCol xs="6" className="text-right">
-                                                        <CButton CColor="link" className="px-0">Forgot password?</CButton>
+                                                        <Link to="/userRecoverPass">
+                                                            <CButton CColor="link" className="px-0">Forgot password?</CButton>
+                                                        </Link>
                                                     </CCol>
                                                 </CRow>
                                             </CForm>
