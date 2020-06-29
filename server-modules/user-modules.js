@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./Models/UserModel')
 const SendEmail = require ('./SendEmail')
 const crypto = require('crypto');
+const NMSendMail = require('./NodeMailer')
 
 // const User = mongoose.model('User', { name:String, surname:String, email: String, password:String, createdAt:Number, sessionToken:String })
 
@@ -63,7 +64,7 @@ router.post('/user/login', (req, res) => {
             console.log(insertErr);
             res.status(500).send(insertErr);
           }
-          SendEmail(user.email,`Benvenuto/a ${user.name}!`,"Complimenti per esserti registrato su I-Mole.");
+          NMSendMail(user.email,`Benvenuto/a ${user.name}!`,"<p>Complimenti per esserti registrato su I-Mole.</p>");
           res.status(200).send(insertRes);
         })
       }
@@ -94,8 +95,9 @@ router.post('/user/login', (req, res) => {
             console.log('req header host',req.headers.host, 'Token', token, ' complete uri:', `http://${req.headers.host}/reset${token}`);
             
             const reqUri = `http://${req.headers.host}/reset${token}`;
-            SendEmail(user.email,'Modifica email della piattaforma I-Mole', `Per favore clicca sul link o incollalo sul browser per completare l'operazione: ${reqUri} Se non hai fatto tu la richiesta di modifica password ignora questo messaggio.`)
-            res.status(200).send({ok:"Email sent"});  
+            //SendEmail(user.email,'Modifica email della piattaforma I-Mole', `<p>Per favore clicca sul link o incollalo sul browser per completare l'operazione: <a href="${reqUri}" Se non hai fatto tu la richiesta di modifica password ignora questo messaggio.</p>`)
+            NMSendMail(user.email,"Modifica password I-Mole", `<p>Per favore clicca sul link o incollalo sul browser per completare l'operazione:</p> <a href="${reqUri}">${reqUri}</a> <p>Se non hai fatto tu la richiesta di modifica password ignora questo messaggio.</p>`)
+            res.status(200).send({ok:"Email sent"});
           });
           //done(err, token);
         });
