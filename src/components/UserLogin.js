@@ -109,7 +109,7 @@ const UserLogin = () => {
                                                 </CInputGroup>
                                                 <CRow>
                                                     <CCol xs="6">
-                                                        <CButton onClick={(e)=>submitCredentials(e)} CColor="primary" className="px-4">Login</CButton>
+                                                        <CButton onClick={(e)=>submitCredentials(e)} color="primary" className="px-4">Login</CButton>
                                                     </CCol>
                                                     <CCol xs="6" className="text-right">
                                                         <Link to="/userRecoverPass">

@@ -73,7 +73,7 @@ const UserRegister = () => {
         <div className="flex-row align-items-center">
 
           <CContainer>
-            {showAlert && <CAlert variant="success">Registrazione avvenuta con successo. Reindirizzamento in corso...</CAlert>}
+            {showAlert && <CAlert color="success">Registrazione avvenuta con successo. Reindirizzamento in corso...</CAlert>}
             <CRow className="justify-content-center">
               <CCol md="9" lg="7" xl="6">
                 <CCard className="mx-4">
