@@ -95,11 +95,13 @@ const UserPassReset = ({match}) => {
                     <CAlert color="info" closeButton fade>
                         Password modificata con successo. Ritorno alla login.
                     </CAlert>}
-                    {showExpiredAlert && 
-                    <CAlert color="info" closeButton fade>
-                        Link scaduto, effettuare una nuova richiesta di modifica password.
-                    </CAlert>}
-                    <CForm>
+                    {showExpiredAlert ? 
+                    (<CAlert color="info" closeButton fade>
+                        Link scaduto, <Link to="/userRecoverPass">effettuare una nuova richiesta di modifica password.</Link>
+                    </CAlert>) 
+                    :
+                    (
+                      <CForm>
                       <h1>Reimposta</h1>
                       <p className="text-muted">Reimposta la password</p>
                       <CInputGroup className="mb-3">
@@ -112,17 +114,18 @@ const UserPassReset = ({match}) => {
                       </CInputGroup>
                       {!validPassword && <CAlert color="info" closeButton fade>
                         Le password non coincidono
-                    </CAlert>}
-                      <CInputGroup className="mb-4">
-                        <CInputGroupPrepend addonType="prepend">
-                          <CInputGroupText>
-                            <CIcon name={'cil-lock-locked'}></CIcon>
-                          </CInputGroupText>
-                        </CInputGroupPrepend>
-                        <CInput type="password" placeholder="Repeat password" value={retypePassword} onChange={(e) => setRetypePassword(e.target.value)} autoComplete="new-password" />
-                      </CInputGroup>
-                      <CButton color="success" block onClick={(e) => submitCredentials(e)}>Aggiorna</CButton>
-                    </CForm>
+                      </CAlert>}
+                        <CInputGroup className="mb-4">
+                          <CInputGroupPrepend addonType="prepend">
+                            <CInputGroupText>
+                              <CIcon name={'cil-lock-locked'}></CIcon>
+                            </CInputGroupText>
+                          </CInputGroupPrepend>
+                          <CInput type="password" placeholder="Repeat password" value={retypePassword} onChange={(e) => setRetypePassword(e.target.value)} autoComplete="new-password" />
+                        </CInputGroup>
+                        <CButton color="success" block onClick={(e) => submitCredentials(e)}>Aggiorna</CButton>
+                      </CForm>
+                    )}
                   </CCardBody>
                 </CCard>
               </CCol>

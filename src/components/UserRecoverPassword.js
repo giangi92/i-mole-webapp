@@ -25,9 +25,9 @@ const RecoverPassword = () => {
     }
 
     if(showMessageSent){
-        setTimeout(() => {
-            setRedirectToLogin(true)
-          }, 3000)
+        // setTimeout(() => {
+        //     setRedirectToLogin(true)
+        //   }, 3000)
     }
 
     if(redirectToLogin){
@@ -51,7 +51,7 @@ const RecoverPassword = () => {
                                                 <p className="text-muted">Inserisci l'email con cui hai effettuato la registrazione</p>
                                                 {showMessageSent && 
                                                 <CAlert color="info" closeButton fade>
-                                                    Sono state inviate le istruzioni di recupero all'indirizzo specificato. Ritorno alla login
+                                                    Sono state inviate le istruzioni di recupero all'indirizzo specificato. <Link to="/">Puoi tornare alla homepage</Link>
                                                 </CAlert>}
                                                 <CInputGroup className="mb-3">
                                                     <CInputGroupPrepend addonType="prepend">
