@@ -32,10 +32,6 @@ const UserPassReset = ({match}) => {
               console.log(data);
               if(data.tokenStatus === 'EXPIRED'){
                 setShowExpiredAlert(true)
-                setTimeout(() => {
-    
-                  setGoToLogin(true);
-                }, 3000)
               }              
             }
           })
