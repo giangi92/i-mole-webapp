@@ -46,28 +46,34 @@ const RecoverPassword = () => {
                                 <CCardGroup>
                                     <CCard className="p-4">
                                         <CCardBody>
-                                            <CForm>
+                                            <CForm onSubmit={(e)=>{e.preventDefault();sendEmail()}}>
                                                 <h1>Recupera password</h1>
                                                 <p className="text-muted">Inserisci l'email con cui hai effettuato la registrazione</p>
-                                                {showMessageSent && 
-                                                <CAlert color="info" closeButton fade>
+                                                {showMessageSent ? 
+                                                (<CAlert color="info" fade>
                                                     Sono state inviate le istruzioni di recupero all'indirizzo specificato. <Link to="/">Puoi tornare alla homepage</Link>
-                                                </CAlert>}
-                                                <CInputGroup className="mb-3">
-                                                    <CInputGroupPrepend addonType="prepend">
-                                                        <CInputGroupText>
-                                                            {/* <i className="icon-user"></i> */}
-                                                            <CIcon name={'cilUser'}></CIcon>
-                                                        </CInputGroupText>
-                                                    </CInputGroupPrepend>
-                                                    <CInput type="email" placeholder="Email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                                </CInputGroup>
+                                                </CAlert>)
+                                                :
+                                                (
+                                                    <div>
+                                                        <CInputGroup className="mb-3">
+                                                            <CInputGroupPrepend addonType="prepend">
+                                                                <CInputGroupText>
+                                                                    {/* <i className="icon-user"></i> */}
+                                                                    <CIcon name={'cilUser'}></CIcon>
+                                                                </CInputGroupText>
+                                                            </CInputGroupPrepend>
+                                                            <CInput type="email" placeholder="Email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                                        </CInputGroup>
+                                                        
+                                                        <CRow>
+                                                            <CCol xs="6">
+                                                                <CButton onClick={()=>{sendEmail()}} color="primary" className="px-4">Invia</CButton>
+                                                            </CCol>
+                                                        </CRow>
+                                                    </div>
+                                                )}
                                                 
-                                                <CRow>
-                                                    <CCol xs="6">
-                                                        <CButton onClick={()=>{sendEmail()}} CColor="c-primary" className="px-4">Invia</CButton>
-                                                    </CCol>
-                                                </CRow>
                                             </CForm>
                                         </CCardBody>
                                     </CCard>

@@ -96,7 +96,7 @@ const UserPassReset = ({match}) => {
                         Password modificata con successo. Ritorno alla login.
                     </CAlert>}
                     {showExpiredAlert ? 
-                    (<CAlert color="info" closeButton fade>
+                    (<CAlert color="info" fade>
                         Link scaduto, <Link to="/userRecoverPass">effettuare una nuova richiesta di modifica password.</Link>
                     </CAlert>) 
                     :
