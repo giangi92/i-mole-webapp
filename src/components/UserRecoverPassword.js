@@ -39,11 +39,6 @@ const RecoverPassword = () => {
     }else{
         return (
             <div>
-                <div className='d-flex justify-content-center align-items-center space-allaround'>
-                    {/* <h1 className='display-1'>Giangisoft</h1> */}
-                    <img src={logo} alt="Imole-logo"></img>
-                </div>
-                
                 <div className="align-items-center">
                     <CContainer>
                         <CRow className="justify-content-center">
@@ -56,7 +51,7 @@ const RecoverPassword = () => {
                                                 <p className="text-muted">Inserisci l'email con cui hai effettuato la registrazione</p>
                                                 {showMessageSent && 
                                                 <CAlert color="info" closeButton fade>
-                                                    E' stata mandata la password all'indirizzo specificato. Ritorno alla login
+                                                    Sono state inviate le istruzioni di recupero all'indirizzo specificato. Ritorno alla login
                                                 </CAlert>}
                                                 <CInputGroup className="mb-3">
                                                     <CInputGroupPrepend addonType="prepend">

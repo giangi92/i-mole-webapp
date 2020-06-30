@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import logo from '../assets/logo/imole-logo.png';
 
@@ -6,14 +6,40 @@ import { CAlert, CButton, CCard, CCardBody, CCol, CContainer, CForm, CInput, CIn
 import CIcon from '@coreui/icons-react';
 
 const UserPassReset = ({match}) => {
-    console.log('Evviva!, USerPassReset caricato');
     
     var [password, setPassword] = useState('');
     var [retypePassword, setRetypePassword] = useState('');
     const [validPassword, setValidPassword] = useState(true);
     const [goToLogin, setGoToLogin] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [showExpiredAlert, setShowExpiredAlert] = useState(false);
     console.log('Token che devi mandare', match.params.token);
+
+    useEffect(()=>{
+      fetch("/user/reset/"+match.params.token,
+          {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (data.error) {
+              console.log('Errore: ' + data.error.message)
+            } else {
+    
+              console.log(data);
+              if(data.tokenStatus === 'EXPIRED'){
+                setShowExpiredAlert(true)
+                setTimeout(() => {
+    
+                  setGoToLogin(true);
+                }, 3000)
+              }              
+            }
+          })
+    },[])
 
     const submitCredentials = (e) => {
         e.preventDefault();
@@ -63,10 +89,6 @@ const UserPassReset = ({match}) => {
         )
       } else {return (
         <div>
-            <div className='d-flex justify-content-center align-items-center space-allaround'>
-                {/* <h1 className='display-1'>Giangisoft</h1> */}
-                <img src={logo} alt="Imole-logo"></img>
-            </div>
             <div className="flex-row align-items-center"></div>
             <CContainer>
             <CRow className="justify-content-center">
@@ -76,6 +98,10 @@ const UserPassReset = ({match}) => {
                   {showAlert && 
                     <CAlert color="info" closeButton fade>
                         Password modificata con successo. Ritorno alla login.
+                    </CAlert>}
+                    {showExpiredAlert && 
+                    <CAlert color="info" closeButton fade>
+                        Link scaduto, effettuare una nuova richiesta di modifica password.
                     </CAlert>}
                     <CForm>
                       <h1>Reimposta</h1>

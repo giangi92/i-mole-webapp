@@ -53,18 +53,24 @@ router.post('/user/login', (req, res) => {
         
       } else {
         //altrimenti non ho trovato nessuno e posso procedere con la registrazione
+        const buf = crypto.randomBytes(20).toString('hex');
+        
         User.create({
           name:user.name,
           surname:user.surname,
           email:user.email,
           password:user.password,
-          sessionToken: jwt.sign({ email: user.email }, 'secret', { expiresIn: '7d' })
+          sessionToken: jwt.sign({ email: user.email }, 'secret', { expiresIn: '7d' }),
+          accountConfirmationToken: buf,
+          accountConfirmationExpires: Date.now() + 259200000, //scade dopo 72h 
+          confirmed:false
         },(insertErr, insertRes)=>{
           if(insertErr){
             console.log(insertErr);
             res.status(500).send(insertErr);
           }
-          NMSendMail(user.email,`Benvenuto/a ${user.name}!`,"<p>Complimenti per esserti registrato su I-Mole.</p>");
+          const reqUri = `http://${req.headers.host}/userConfirm${buf}`;
+          NMSendMail(user.email,`Benvenuta/o ${user.name}!`,`<p>Complimenti per la registrazione su I-Mole.</p><p>Per confermare il tuo account clicca sul seguente link (dura 72 ore):</p><a href="${reqUri}">${reqUri}</a><h3>Il team di I-Mole</h3>`);
           res.status(200).send(insertRes);
         })
       }
@@ -112,13 +118,10 @@ router.post('/user/login', (req, res) => {
     router.get('/user/reset/:token', function(req, res) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
         if (!user) {
-          req.flash('error', 'Password reset token is invalid or has expired.');
-          return res.status(400).send({error:'Token not valid'});
+          return res.status(400).send({tokenStatus:'EXPIRED'});
         }
         
-        res.status(200).send('reset', {
-          user: req.user
-        });
+        res.status(200).send({tokenStatus:'GOOD'});
       });
     });
 
@@ -137,6 +140,23 @@ router.post('/user/login', (req, res) => {
             res.status(500).send(err);
           }
           res.status(200).send({message:'New password saved'});
+        });
+      });
+    });
+
+    router.get('/user/confirm/:token', function(req, res) {
+      User.findOne({ accountConfirmationToken: req.params.token, accountConfirmationExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          return res.status(400).send({tokenStatus:'EXPIRED'});
+        }
+
+        user.confirmed = true;
+        
+        user.save(function(err) {
+          if (err) {
+            res.status(500).send(err);
+          }
+          res.status(200).send({message:'Account confirmed'});
         });
       });
     });

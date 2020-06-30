@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 import {
   TheContent,
   TheSidebar,
@@ -6,6 +7,8 @@ import {
   TheHeader,
   TheLogin
 } from './index'
+
+import logo from '../assets/logo/imole-logo.png';
 
 import UserContext from '../Contexts/UserContext'
 
@@ -39,6 +42,11 @@ const TheLayout = () => {
       <UserContext.Provider value={contextObject}>
         {!logged ? (
           <div>
+            <div className='d-flex justify-content-center align-items-center space-allaround'>
+                  <Link to="/">
+                      <img src={logo} alt="Imole-logo"></img>
+                  </Link>
+            </div>
             <TheLogin></TheLogin>
           </div>
         )

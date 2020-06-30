@@ -70,10 +70,6 @@ const UserRegister = () => {
   } else {
     return (
       <div>
-        <div className='d-flex justify-content-center align-items-center space-allaround'>
-          {/* <h1 className='display-1'>Giangisoft</h1> */}
-          <img src={logo} alt="Imole-logo"></img>
-        </div>
         <div className="flex-row align-items-center">
 
           <CContainer>
