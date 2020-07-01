@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 var faker = require('faker');
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://Gianluca:Bragraprecia19@giangi-rjfa9.mongodb.net/test?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://Gianluca:Bragraprecia19@giangi-rjfa9.mongodb.net/test?retryWrites=true&w=majority";
+const uri = process.env.MONGO_CONNECTION_URI || 'mongodb://localhost:27017/I-Mole'
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -15,8 +16,7 @@ var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('JWT');
 opts.secretOrKey = 'secret';
 
-passport.use('jwt',new JwtStrategy(opts, function (jwt_payload, done) {
-  console.log("jwt payload più interno:",jwt_payload);
+passport.use('jwt',new JwtStrategy(opts, (jwt_payload, done) => {
   
   User.findOne({ email: jwt_payload.email }, function (err, user) {
     if (err) {
@@ -84,8 +84,9 @@ app.get('/employees', (req, res) => {
   passport.authenticate('jwt', {session:false}, (err, user, info)=>{
     if(err){
       console.log(err);
+      res.status(500).send(err);
     }
-    if(info){
+    else if(info){
       res.status(401).send(info);
     }else{
       //già autenticato, può ricevere i dati
@@ -131,68 +132,6 @@ app.post('/employees/update', (req, res) => {
   }
 
 })
-
-// app.post('/user/login', (req, res) => {
-
-//   const user = req.body;
-//   User.findOne({ email: user.email, password: user.password }, (err, resp) => {
-//     if (err) {
-//       res.status(404).send('Error', err);
-//     }
-
-//     if (resp) {
-//       let dbuser = resp;
-//       console.log('Lo abbiamo trovato!!', dbuser);
-//       dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '2 minutes' });
-
-//       dbuser.save((saveErr, saveResp) => {
-//         if (saveErr) {
-//           res.status(500).send(saveErr);
-//         }
-//         res.status(200).send(dbuser);
-//       })
-//     } else {
-//       //altrimenti non ho trovato nessuno
-//       res.status(404).send({error:"Nothing found"});
-//     }
-
-//   })
-
-// })
-
-// app.post('/user/register', (req, res) => {
-
-//   const user = req.body;
-//   User.findOne({ email: user.email }, (err, resp) => {
-//     if (err) {
-//       res.status(404).send('Error', err);
-//     }
-
-//     if (resp) {
-//       let dbuser = resp;
-//       console.log('Email già presente', dbuser);
-//       res.status(409).send({error:{message:'Email già in uso.'}})
-      
-//     } else {
-//       //altrimenti non ho trovato nessuno e posso procedere con la registrazione
-//       User.create({
-//         name:user.name,
-//         surname:user.surname,
-//         email:user.email,
-//         password:user.password,
-//         sessionToken: jwt.sign({ email: user.email }, 'secret', { expiresIn: '7d' })
-//       },(insertErr, insertRes)=>{
-//         if(insertErr){
-//           console.log(insertErr);
-//           res.status(500).send(insertErr);
-//         }
-//         res.status(200).send(insertRes);
-//       })
-//     }
-
-//   })
-
-// })
 
 app.post('/employees/generaterandom/:number', (req, res) => {
   try {

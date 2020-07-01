@@ -7,15 +7,15 @@ const User = require('./Models/UserModel')
 const crypto = require('crypto');
 const NMSendMail = require('./NodeMailer')
 
+const log = require('../server-utils/logger.js')
+
 router.post('/user/login', (req, res) => {
 
     const user = req.body;
     User.findOne({ email: user.email, password: user.password }, (err, resp) => {
       if (err) {
-        return res.status(404).send('Error', err);
-      }
-  
-      if (resp) {
+        res.status(404).send('Error', err);
+      }else if (resp) {
         let dbuser = resp;
         console.log('Lo abbiamo trovato!!', dbuser);
         
@@ -23,9 +23,10 @@ router.post('/user/login', (req, res) => {
   
         dbuser.save((saveErr, saveResp) => {
           if (saveErr) {
-            return res.status(500).send(saveErr);
+            res.status(500).send(saveErr);
+          }else{
+            res.status(200).send(dbuser);
           }
-          res.status(200).send(dbuser);
         })
       } else {
         //altrimenti non ho trovato nessuno
@@ -120,7 +121,7 @@ router.post('/user/login', (req, res) => {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
         if (!user) {
           console.log('Nessun utente trovato');
-          
+          log.error(req.headers.host + ' ' + ' ' + req.path + req.method +  ' - No user found');
           return res.status(400).send({tokenStatus:'EXPIRED'});
         }
         console.log('Tutto ok!');
