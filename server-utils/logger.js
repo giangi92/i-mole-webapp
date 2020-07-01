@@ -3,7 +3,7 @@ const { createLogger, format, transports } = require('winston');
 const fs = require('fs');
 const path = require('path')
 const rootDir = path.join(__dirname, '../..')
-const logDir = path.join(rootDir, 'log')
+const logDir = path.join(rootDir, 'app/log')
 
 fs.existsSync(logDir) || fs.mkdirSync(logDir)
 
