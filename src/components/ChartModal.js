@@ -1,6 +1,6 @@
 import React from 'react';
 import { CModal, CModalBody, CModalHeader } from '@coreui/react';
-import { CChartBar } from '@coreui/react-chartjs';
+import { CChart } from '@coreui/react-chartjs';
 import { CTooltip } from '@coreui/react';
 
 const bar = {
@@ -28,10 +28,10 @@ const bar = {
   };
 
   const options = {
-    tooltips: {
-      enabled: false,
-      custom: CTooltip
-    },
+    // tooltips: {
+    //   enabled: false,
+    //   custom: CTooltip
+    // },
     maintainAspectRatio: false
   }
 
@@ -44,17 +44,23 @@ const ChartModal = (props) => {
     return (
 
         <div className="animated fadeIn">
-            <CModal className="modal-info modal-lg" isOpen={props.show} toggle={props.toggle} id="charModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <CModalHeader>
+            <CModal className="modal-info modal-lg" show={props.show} onClose={props.toggle} id="charModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <CModalHeader closeButton>
                     Statistica salari dei tuoi dipendendi
                 </CModalHeader>
                 <CModalBody>
                     Mostra i salari qui con un chart
                     <div className="chart-wrapper">
-                        <CChartBar data={bar} options={options} />
+                        <CChart type="bar" datasets={bar.datasets} options={options} labels={bar.labels} />
                     </div>
                 </CModalBody>
+                <div className="chart-wrapper">
+                    <CChart type="bar" datasets={bar.datasets} options={options} labels={bar.labels} />
+                </div>
             </CModal>
+            <div className="chart-wrapper">
+                <CChart type="bar" datasets={bar.datasets} options={options} labels={bar.labels} />
+            </div>
         </div>
     )
 }

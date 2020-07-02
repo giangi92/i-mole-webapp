@@ -49,20 +49,28 @@ const UserLogin = () => {
                 },
                 body: JSON.stringify({ email, password })
             })
-            .then(function (res) { return res.json(); })
+            .then(function (res) { 
+                if(res.status === 404){
+                    alert("Problema di connessione con il server. Riprovare più tardi")
+                }else{
+                    return res.json(); 
+                }
+            })
             .then(function (data) {
-                if (data.error) {
-                    setValidEmail(false);
-                    console.log('email inserita non valida validEmail:', validEmail)
-                } else {
-                    localStorage.setItem('sessionToken', data.sessionToken);
-                    console.log(data);
-                    // const user = new User(data);
-                    userContext.setLoggedUser(data);
-                    localStorage.setItem('user', JSON.stringify(data));
-                    setGoToDashboard(true);
-                    userContext.setLogged(true);
-                    // console.log(localStorage.getItem("sessionToken"));
+                if(data){
+                    if (data.error) {
+                        setValidEmail(false);
+                        console.log('email inserita non valida validEmail:', validEmail)
+                    } else {
+                        localStorage.setItem('sessionToken', data.sessionToken);
+                        console.log(data);
+                        // const user = new User(data);
+                        userContext.setLoggedUser(data);
+                        localStorage.setItem('user', JSON.stringify(data));
+                        setGoToDashboard(true);
+                        userContext.setLogged(true);
+                        // console.log(localStorage.getItem("sessionToken"));
+                    }
                 }
             })
     }

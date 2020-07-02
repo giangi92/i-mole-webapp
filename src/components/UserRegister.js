@@ -40,10 +40,17 @@ const UserRegister = () => {
         },
         body: JSON.stringify({ name, surname, email, password })
       })
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if(res.status === 409){
+          setValidEmail(false);
+          console.log('Errore 409, utente già presente');
+          
+        }else 
+          return res.json(); 
+      })
       .then(function (data) {
         if (data.error) {
-          setValidEmail(false);
+          //setValidEmail(false);
           console.log('Errore: ' + data.error.message, validEmail)
         } else {
 
@@ -54,7 +61,7 @@ const UserRegister = () => {
           setTimeout(() => {
 
             setGoToLogin(true);
-          }, 3000)
+          }, 3500)
           //alert('Registrato nuovo utente: ' + data.name + '. Effettua l`accesso');
           // console.log(localStorage.getItem("sessionToken"));
         }
@@ -73,7 +80,7 @@ const UserRegister = () => {
         <div className="flex-row align-items-center">
 
           <CContainer>
-            {showAlert && <CAlert color="success">Registrazione avvenuta con successo. Reindirizzamento in corso...</CAlert>}
+            {showAlert && <CAlert color="success">Registrazione avvenuta con successo. E' stata inviata un'email per la conferma. Reindirizzamento in corso...</CAlert>}
             <CRow className="justify-content-center">
               <CCol md="9" lg="7" xl="6">
                 <CCard className="mx-4">

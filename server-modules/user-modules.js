@@ -30,7 +30,7 @@ router.post('/user/login', (req, res) => {
         })
       } else {
         //altrimenti non ho trovato nessuno
-        res.status(404).send({error:"Nothing found"});
+        res.status(400).send({error:"NO_USER"});
       }
   
     })
@@ -112,7 +112,7 @@ router.post('/user/login', (req, res) => {
         
       }else {
         //altrimenti non ho trovato nessuno
-        res.status(404).send({error:"Nothing found"});
+        res.status(400).send({error:"Nothing found"});
       }
     }
     )})
