@@ -27,6 +27,21 @@ const bar = {
     ],
   };
 
+  const bar2 = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'My First dataset',
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+        hoverBorderColor: 'rgba(255,99,132,1)',
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+    ],
+  };
+
   const options = {
     // tooltips: {
     //   enabled: false,
@@ -44,22 +59,22 @@ const ChartModal = (props) => {
     return (
 
         <div className="animated fadeIn">
-            <CModal className="modal-info modal-lg" show={props.show} onClose={props.toggle} id="charModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <CModal show={props.show} onClose={props.toggle}>
                 <CModalHeader closeButton>
                     Statistica salari dei tuoi dipendendi
                 </CModalHeader>
                 <CModalBody>
                     Mostra i salari qui con un chart
                     <div className="chart-wrapper">
-                        <CChart type="bar" datasets={bar.datasets} options={options} labels={bar.labels} />
+                        <CChart type="bar" datasets={bar2.datasets} options={options} labels={bar2.labels} />
                     </div>
                 </CModalBody>
                 <div className="chart-wrapper">
-                    <CChart type="bar" datasets={bar.datasets} options={options} labels={bar.labels} />
+                    <CChart type="bar" datasets={bar2.datasets} options={options} labels={bar2.labels} />
                 </div>
             </CModal>
             <div className="chart-wrapper">
-                <CChart type="bar" datasets={bar.datasets} options={options} labels={bar.labels} />
+                <CChart type="bar" datasets={bar2.datasets} options={options} labels={bar2.labels} />
             </div>
         </div>
     )

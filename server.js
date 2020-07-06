@@ -9,6 +9,10 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userRoutes = require('./server-modules/user-modules')
 const User = require('./server-modules/Models/UserModel')
+const morgan = require('morgan')
+const FileStreamRotator = require('file-stream-rotator')
+const rootDir = path.join(__dirname, '..')
+const logDir = path.join(rootDir, 'log')
 
 var JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -44,6 +48,17 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(
 
 });
 
+const accessLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYY-MM-DD',
+  filename: path.join(logDir, '%DATE%-access.log'),
+  frequency: 'daily',
+  verbose: false
+})
+
+morgan.token('id', function getId (req) {
+    return req.id
+})
+
 const app = express();
 const port = process.env.PORT || 3000;
 // const User = mongoose.model('User', { name:String, surname:String, email: String, password:String, createdAt:Number, sessionToken:String })
@@ -58,6 +73,8 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 // app.use(express.session({ secret: 'secret' }));
 app.use(passport.initialize());
 app.use(userRoutes)
+app.use(morgan(':id :remote-addr - :remote-user [:date[iso]] ":method '+
+':url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: accessLogStream }))
 
 app.post('/mongo/addcat', (req, res) => {
   try {
