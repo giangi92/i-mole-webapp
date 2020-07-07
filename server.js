@@ -11,8 +11,8 @@ const userRoutes = require('./server-modules/user-modules')
 const User = require('./server-modules/Models/UserModel')
 const morgan = require('morgan')
 const FileStreamRotator = require('file-stream-rotator')
-const rootDir = path.join(__dirname, '..')
-const logDir = path.join(rootDir, 'log')
+const rootDir = path.join(__dirname, '../..')
+const logDir = path.join(rootDir, 'app/log')
 
 var JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
