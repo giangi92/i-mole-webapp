@@ -7,6 +7,26 @@ const User = require('./Models/UserModel')
 const crypto = require('crypto');
 const NMSendMail = require('./NodeMailer')
 
+const path = require('path');
+const morgan = require('morgan')
+const FileStreamRotator = require('file-stream-rotator')
+const rootDir = path.join(__dirname, '../..')
+const logDir = path.join(rootDir, 'log')
+
+const accessLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYY-MM-DD',
+  filename: path.join(logDir, '%DATE%-access.log'),
+  frequency: 'daily',
+  verbose: false
+})
+
+morgan.token('id', function getId (req) {
+    return req.id
+})
+
+express().use(morgan(':id :remote-addr - :remote-user [:date[iso]] ":method '+
+':url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: accessLogStream }))
+
 const log = require('../server-utils/logger.js')
 
 router.post('/user/login', (req, res) => {
