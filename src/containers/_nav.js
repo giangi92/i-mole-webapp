@@ -45,9 +45,16 @@ export default [
     ]
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'File Upload',
+    to: '/fileUpload',
+    icon: 'cil-cloud-upload',
+  },
+  {
     _tag: 'CSidebarNavDivider',
     className: 'm-2'
   },
+  
   {
     _tag: 'CSidebarNavDivider',
     className: 'm-2'

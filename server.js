@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 var faker = require('faker');
 const mongoose = require('mongoose');
-// const uri = "mongodb+srv://Gianluca:Bragraprecia19@giangi-rjfa9.mongodb.net/test?retryWrites=true&w=majority";
 const uri = process.env.MONGO_CONNECTION_URI || 'mongodb://localhost:27017/I-Mole'
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
@@ -55,9 +54,9 @@ const accessLogStream = FileStreamRotator.getStream({
   verbose: false
 })
 
-morgan.token('id', function getId (req) {
-    return req.id
-})
+// morgan.token('id', function getId (req) {
+//     return req.id
+// })
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -73,8 +72,8 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 // app.use(express.session({ secret: 'secret' }));
 app.use(passport.initialize());
 app.use(userRoutes)
-app.use(morgan(':id :remote-addr - :remote-user [:date[iso]] ":method '+
-':url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: accessLogStream }))
+// app.use(morgan(':id :remote-addr - :remote-user [:date[iso]] ":method '+
+// ':url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: accessLogStream }))
 
 app.post('/mongo/addcat', (req, res) => {
   try {

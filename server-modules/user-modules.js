@@ -13,10 +13,18 @@ morgan.token('id', function getId (req) {
     return req.id
 })
 
-const log = require('../server-utils/logger.js')
+const imole_log = require('../server-utils/imole-log.js')
+const accessLogStream = require('../server-utils/access-log-stream.js')
+
+router.use((req, res, next) => {
+  morgan(':id :remote-addr - :remote-user [:date[iso]] ":method '+
+  ':url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: accessLogStream });
+  next();
+});
 
 router.post('/user/login', (req, res) => {
 
+  imole_log.info("USER LOGIN START:"+(req.headers.host + ' ' + ' ' + req.path + req.method))
     const user = req.body;
     User.findOne({ email: user.email, password: user.password }, (err, resp) => {
       if (err) {
@@ -40,7 +48,7 @@ router.post('/user/login', (req, res) => {
       }
   
     })
-  
+    imole_log.info("USER LOGIN END")
   })
   
   router.post('/user/register',  (req, res) => {
@@ -127,7 +135,7 @@ router.post('/user/login', (req, res) => {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (err, user) => {
         if (!user) {
           console.log('Nessun utente trovato');
-          log.error(req.headers.host + ' ' + ' ' + req.path + req.method +  ' - No user found');
+          imole_log.error(req.headers.host + ' ' + ' ' + req.path + req.method +  ' - No user found');
           return res.status(400).send({tokenStatus:'EXPIRED'});
         }
         console.log('Tutto ok!');

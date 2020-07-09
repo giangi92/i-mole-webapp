@@ -5,6 +5,7 @@ import logo from '../assets/logo/imole-logo.png';
 import { AppNavbarBrand, CAlert } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import UserContext from '../Contexts/UserContext'
+import FileUpload from './imole-components/FileUpload'
 
 const UserLogin = () => {
     var [email, setEmail] = useState('');
@@ -99,7 +100,7 @@ const UserLogin = () => {
                                                 <p className="text-muted">Sign In to your account</p>
                                                 {!validEmail && <p className="red-border">Email o password non corrette</p>}
                                                 <CInputGroup className="mb-3">
-                                                    <CInputGroupPrepend addonType="prepend">
+                                                    <CInputGroupPrepend >
                                                         <CInputGroupText>
                                                             {/* <i className="icon-user"></i> */}
                                                             <CIcon name={'cilUser'}></CIcon>
@@ -108,7 +109,7 @@ const UserLogin = () => {
                                                     <CInput type="email" placeholder="Email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                                 </CInputGroup>
                                                 <CInputGroup className="mb-4">
-                                                    <CInputGroupPrepend addonType="prepend">
+                                                    <CInputGroupPrepend>
                                                         <CInputGroupText>
                                                             <CIcon name={'cil-lock-locked'}></CIcon>
                                                         </CInputGroupText>
@@ -121,7 +122,7 @@ const UserLogin = () => {
                                                     </CCol>
                                                     <CCol xs="6" className="text-right">
                                                         <Link to="/userRecoverPass">
-                                                            <CButton CColor="link" className="px-0">Forgot password?</CButton>
+                                                            <CButton color="link" className="px-0">Forgot password?</CButton>
                                                         </Link>
                                                     </CCol>
                                                 </CRow>

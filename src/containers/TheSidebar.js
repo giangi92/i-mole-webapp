@@ -14,6 +14,7 @@ import {
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
+import { cifAU } from '@coreui/icons';
 import fullLogo from '../assets/logo/imole-logo.png'
 import miniLogo from '../assets/logo/apple-touch-icon.png'
 
