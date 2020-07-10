@@ -14,7 +14,7 @@ var storage = multer.diskStorage(
         destination: './uploads/',
         filename: function ( req, file, cb ) {
             //req.body is empty...
-            cb( null, file.originalname.split(".")[0]+ '-' + Date.now()+".pdf");
+            cb( null, file.originalname.split(".")[0]+ '-' + Date.now()+".excel");
         }
     }
 );
