@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const userRoutes = require('./server-modules/user-modules')
+const imoleRoutes = require('./server-modules/imole-modules')
 const User = require('./server-modules/Models/UserModel')
 const morgan = require('morgan')
 const FileStreamRotator = require('file-stream-rotator')
@@ -72,6 +73,7 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 // app.use(express.session({ secret: 'secret' }));
 app.use(passport.initialize());
 app.use(userRoutes)
+app.use(imoleRoutes)
 // app.use(morgan(':id :remote-addr - :remote-user [:date[iso]] ":method '+
 // ':url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', { stream: accessLogStream }))
 
