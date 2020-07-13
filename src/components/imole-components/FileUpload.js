@@ -44,6 +44,8 @@ const FileUpload = () => {
                 if(resp.error){
                     //MESSAGGIO ERRORE CARICAMENTO
                     setShowFileErrorMess(false);
+                    console.log('errore server');
+                    
                 }else if(resp.message === "NOT_AUTENTICATED"){
                     //MOSTRA MESSAGGIO, ERRORE UTENTE
                 }else if(resp.message === "NOT_VALID"){
