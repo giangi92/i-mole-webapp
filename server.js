@@ -60,7 +60,7 @@ const accessLogStream = FileStreamRotator.getStream({
 // })
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 // const User = mongoose.model('User', { name:String, surname:String, email: String, password:String, createdAt:Number, sessionToken:String })
 const Cat = mongoose.model('Cat', { name: String });
 const Employees = mongoose.model('Employees', { _id: mongoose.Types.ObjectId, name: String, email: String, salary: Number, firedable: Boolean })

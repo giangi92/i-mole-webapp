@@ -41,6 +41,8 @@
     "faker": "^4.1.0",
     "file-stream-rotator": "^0.5.7",
     "jsonwebtoken": "^8.5.1",
+    "leaflet": "^1.6.0",
+    "mapbox-gl": "^1.11.1",
     "mongoose": "^5.9.21",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
@@ -49,10 +51,12 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "pigeon-maps": "^0.15.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",
+    "react-leaflet": "^2.7.0",
     "react-redux": "7.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "4.0.5",
@@ -73,6 +77,7 @@
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3001",
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
   },

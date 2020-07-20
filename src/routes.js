@@ -41,6 +41,7 @@ const Homepage = React.lazy(() => import('./components/Homepage'));
 const Employees = React.lazy(()=>import('./components/Employees'));
 const UserInfo = React.lazy(()=>import('./components/UserInfo'))
 const FileUpload = React.lazy(()=>import('./components/imole-components/FileUpload'))
+const Maps = React.lazy(()=>import('./components/imole-components/Maps'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -84,7 +85,8 @@ const routes = [
   { path: '/users', exact: true,  name: 'Users', component: Employees },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/userInfo', exact: true, name: 'User Info', component: UserInfo },
-  { path: '/fileUpload', exact: true, name: 'File Upload', component: FileUpload }
+  { path: '/fileUpload', exact: true, name: 'File Upload', component: FileUpload },
+  { path: '/mappe', exact: true, name: 'Maps', component: Maps }
 ];
 
 export default routes;

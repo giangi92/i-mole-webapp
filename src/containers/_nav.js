@@ -51,6 +51,12 @@ export default [
     icon: 'cil-cloud-upload',
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Mappe',
+    to: '/mappe',
+    icon: 'cil-map',
+  },
+  {
     _tag: 'CSidebarNavDivider',
     className: 'm-2'
   },

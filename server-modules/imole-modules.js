@@ -80,13 +80,18 @@ router.post('/imole/fileUpload', upload.single('file'), (req, res)=>{
     console.log('IMOLE FILE UPLOAD END');
 })
 
+function test () {
+    throw new Error('niu exepcion')
+}
+
 router.get('/imole/processDocuments', (req, res)=>{
-    try{
-        DocProcessor();
+    DocProcessor().then(()=>{
         res.status(200).send('Success')
-    }catch(e){
-        return res.status(500).send('Error: '+e)
-    }
+    }).catch((e)=>{
+        console.log('Huston, abbiamo un errore')
+        return res.status(500).send('Errore: '+e)
+    });
+        
 })
 
 module.exports = router;
