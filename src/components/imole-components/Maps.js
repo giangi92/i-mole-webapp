@@ -121,7 +121,7 @@ class Maps extends React.Component {
                 //set marker CSS
                 waypoints[j + 1] ? j == 0 ? marker.className = 'start-marker' : marker.className = 'normal-marker' : marker.className = 'last-marker';
                 
-                var popup = new mapboxgl.Popup({ offset: 25 }).setText('Posizione:          \nRilevazione effettuata il  alle ore ');
+                var popup = new mapboxgl.Popup({ offset: 25 }).setText('Posizione:'+transportSteps[j].name+'          \nRilevazione effettuata il  alle ore ');
                 
                 console.log('waypont location:',waypoint.location);
 
