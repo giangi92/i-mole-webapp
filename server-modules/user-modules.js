@@ -33,7 +33,7 @@ router.post('/user/login', (req, res) => {
         let dbuser = resp;
         console.log('Lo abbiamo trovato!!', dbuser);
         
-        dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '2 minutes' });
+        dbuser.sessionToken = jwt.sign({ email: user.email }, 'secret', { expiresIn: '12h' });
   
         dbuser.save((saveErr, saveResp) => {
           if (saveErr) {
