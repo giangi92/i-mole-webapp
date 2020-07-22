@@ -95,61 +95,140 @@ class Maps extends React.Component {
                 }
             })
             .then(function (data) {
-                // console.log(data);
-                addWaypoint(data.waypoints, transportSteps, map)
-            })
-            
-        }
-        
-        addWaypoints(waypoints, transportSteps, map) {
-            var transportInfo = transportSteps;
-            // console.log(transportInfo);
-            var currentMarkers = [];
-            // remove markers 
-            // if (this.currentMarkers !== null && this.currentMarkers.length > 0) {
-            //     for (var i = this.currentMarkers.length - 1; i >= 0; i--) {
-            //         this.currentMarkers[i].remove();
-            //     }
-            // }
-            
-            let j = 0;
-            
-            var boundingBox = [];
-            waypoints.map((waypoint) => {
-                // create a HTML element for each feature
-                let marker = document.createElement('div');
-                //set marker CSS
-                waypoints[j + 1] ? j == 0 ? marker.className = 'start-marker' : marker.className = 'normal-marker' : marker.className = 'last-marker';
+                console.log({'type': 'geojson',
+                'data': data});
                 
-                var popup = new mapboxgl.Popup({ offset: 25 }).setText('Posizione:'+transportSteps[j].name+'          \nRilevazione effettuata il  alle ore ');
-                
-                console.log('waypont location:',waypoint.location);
-
-                const singleMarker = new mapboxgl.Marker(marker)
-                .setPopup(
-                    popup
-                    )
-                .setLngLat(waypoint.location).addTo(map);
+                map.loadImage(
+                    'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+                    // Add an image to use as a custom marker
+                    function(error, image) {
+                        if (error) throw error;
+                        map.addImage('custom-marker', image);
+                        
+                    })
                     
-                    // // save tmp marker into this.currentMarkers
-                    currentMarkers.push(singleMarker);
-                    boundingBox.push([waypoint.location[0], waypoint.location[1]])
-                    j++;
-                })
-                
-                // console.log(boundingBox)
-                map.fitBounds([boundingBox[0],boundingBox[boundingBox.length-1]],{padding:{top:200,bottom:100}});
-            }
-            
-            
-            render() {
-                return (
-                    <div>
-                    <div ref={el => this.mapContainer = el} className="mapContainer" />
-                    </div>
-                    )
-                }
-            }
-            
-            export default Maps;
-            
+                    const features = [];
+                    
+                    data.waypoints.map((wp)=>{
+                        features.push(
+                            {
+                                'type': 'Feature',
+                                'properties': {
+                                    'description':
+                                    '<strong>Questo è un popup</strong><p>E dovrebbe uscire se ci passi il mouse sopra 👍</p>'
+                                },
+                                'geometry': {
+                                    'type': 'Point',
+                                    'coordinates': wp.location
+                                }
+                            }
+                            )
+                        })
+                        
+                        map.addSource('places', {'type': 'geojson',
+                        'data': {
+                            "type": "FeatureCollection","features":features}})
+                            
+                            // Add a layer showing the places.
+                            map.addLayer({
+                                'id': 'places',
+                                'type': 'symbol',
+                                'source': 'places',
+                                'layout': {
+                                    'icon-image': 'custom-marker',
+                                    'icon-allow-overlap': true
+                                }
+                            });
+                            
+                            var dynamicPopup = new mapboxgl.Popup({
+                                closeButton: false,
+                                closeOnClick: false
+                            });
+                            
+                            map.on('mouseenter', 'places', function(e) {
+                                // Change the cursor style as a UI indicator.
+                                map.getCanvas().style.cursor = 'pointer';
+                                
+                                var coordinates = e.features[0].geometry.coordinates.slice();
+                                var description = e.features[0].properties.description;
+                                
+                                // Ensure that if the map is zoomed out such that multiple
+                                // copies of the feature are visible, the popup appears
+                                // over the copy being pointed to.
+                                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                                }
+                                
+                                // Populate the popup and set its coordinates
+                                // based on the feature found.
+                                dynamicPopup
+                                .setLngLat(coordinates)
+                                .setHTML(description)
+                                .addTo(map);
+                            });
+                            
+                            map.on('mouseleave', 'places', function() {
+                                map.getCanvas().style.cursor = '';
+                                dynamicPopup.remove();
+                            });
+                            
+                            
+                            
+                            addWaypoint(data.waypoints, transportSteps, map)
+                        })
+                        
+                    }
+                    
+                    addWaypoints(waypoints, transportSteps, map) {
+                        var transportInfo = transportSteps;
+                        // console.log(transportInfo);
+                        var currentMarkers = [];
+                        // remove markers 
+                        // if (this.currentMarkers !== null && this.currentMarkers.length > 0) {
+                        //     for (var i = this.currentMarkers.length - 1; i >= 0; i--) {
+                        //         this.currentMarkers[i].remove();
+                        //     }
+                        // }
+                        
+                        let j = 0;
+                        
+                        var boundingBox = [];
+                        
+                        waypoints.map((waypoint) => {
+                            // create a HTML element for each feature
+                            let marker = document.createElement('div');
+                            //set marker CSS
+                            waypoints[j + 1] ? j == 0 ? marker.className = 'start-marker' : marker.className = 'normal-marker' : marker.className = 'last-marker';
+                            
+                            var popup = new mapboxgl.Popup({ offset: 25 }).setText('Posizione:'+transportSteps[j].name+'          \nRilevazione effettuata il  alle ore ');
+                            
+                            console.log('waypont location:',waypoint.location);
+                            
+                            const singleMarker = new mapboxgl.Marker(marker)
+                            .setPopup(
+                                popup
+                                )
+                                .setLngLat(waypoint.location).addTo(map);                
+                                
+                                // // save tmp marker into this.currentMarkers
+                                currentMarkers.push(singleMarker);
+                                boundingBox.push([waypoint.location[0], waypoint.location[1]])
+                                j++;
+                            })
+                            
+                            // console.log(boundingBox)
+                            map.fitBounds([boundingBox[0],boundingBox[boundingBox.length-1]],{padding:{top:200,bottom:100}});
+                        }
+                        
+                        
+                        render() {
+                            return (
+                                <div>
+                                <div ref={el => this.mapContainer = el} className="mapContainer" />
+                                </div>
+                                )
+                            }
+                        }
+                        
+                        export default Maps;
+                        
