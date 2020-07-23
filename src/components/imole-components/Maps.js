@@ -1,6 +1,10 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
 import TruckSearchfield from './TruckSearchfield'
+import MapGL, {
+    NavigationControl
+  } from 'react-map-gl';
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmVhY2hpZXBwYSIsImEiOiJjazhiejRkbGEwZ3RoM2V0cXoyOWxqbGZnIn0.G7IbIk6wElRVIhWgZREyQg';
 const transportSteps_ = [
@@ -521,12 +525,11 @@ class Maps extends React.Component {
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom
         });
+
+        //map.addControl();
+
         this.currentMap = map;
-        // map.on('load', () => {
-        //     // map.resize();
-        //     // map.addControl(new mapboxgl.NavigationControl());
-        //     //this.getMatch(transportSteps, map);
-        // })
+        
     }
     
     // make a directions request
@@ -578,7 +581,8 @@ class Maps extends React.Component {
                 // Add an image to use as a custom marker
                 function(error, image) {
                     if (error) throw error;
-                    map.addImage('custom-marker', image);
+                    if(!map.hasImage('custom-marker'))
+                        map.addImage('custom-marker', image);
                     
                 })
                 
@@ -706,13 +710,14 @@ class Maps extends React.Component {
             })
             
             // console.log(boundingBox)
-            map.fitBounds([boundingBox[0],boundingBox[boundingBox.length-1]],{padding:{top:200,bottom:100,left:100}});
+            map.fitBounds([boundingBox[0],boundingBox[boundingBox.length-1]],{padding:{top:200,bottom:100,left:400,right:100}});
     }
                         
                         
     render() {
         return (
             <div>
+            
             <div ref={el => this.mapContainer = el} className="mapContainer" />
             <TruckSearchfield elemList = {camion} getMatch={this.getMatch} currentMap={this.currentMap} style={{position:'absolute'}}></TruckSearchfield>
             </div>

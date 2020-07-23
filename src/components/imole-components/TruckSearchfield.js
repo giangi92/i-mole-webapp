@@ -7,6 +7,7 @@ import TypeChecker from 'typeco';
 const TruckSearchfield = (props)=>{
 
     const [itemList, setItemList] = useState(props.elemList);
+    const [oldButton, setOldButton] = useState();
 
     // useEffect(()=>{
     //     setItemList(props.elemList)
@@ -20,6 +21,14 @@ const TruckSearchfield = (props)=>{
         const filteredList = getMatchedList(value);
         console.log(filteredList);
         setItemList(filteredList)
+    }
+    const changeColor = (e)=>{
+        console.log('elemento cliccato:', e.target);
+        if(oldButton){
+            oldButton.className="btn btn-info btn-block"
+        }
+        setOldButton(e.target);
+        e.target.className = "btn btn-info-complementary btn-block"
     }
     return (
         <div>
@@ -40,7 +49,12 @@ const TruckSearchfield = (props)=>{
                             return (
                                 
                                 <li key={i} className="list-padding">
-                                    <CButton className="btn btn-info btn-block" onClick={()=>props.getMatch(e.track,e.currentMap)}>
+                                    <CButton className="btn btn-info btn-block" onClick={
+                                        (btn)=>{
+                                                props.getMatch(e.track,e.currentMap)
+                                                changeColor(btn)
+                                            }
+                                         }>
                                         {e.id}
                                     </CButton>
                                 </li>
