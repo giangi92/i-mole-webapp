@@ -35,11 +35,11 @@ const TruckSearchfield = (props)=>{
                 </CCardHeader>
                 <CCardBody className="fixed-height">
                     <ul>
-                        {itemList ? itemList.map((e, id)=>{
+                        {itemList ? itemList.map((e, i)=>{
                             console.log(e)
                             return (
                                 
-                                <li key={e.id} className="list-padding">
+                                <li key={i} className="list-padding">
                                     <CButton className="btn btn-info btn-block" onClick={()=>props.getMatch(e.track,e.currentMap)}>
                                         {e.id}
                                     </CButton>
