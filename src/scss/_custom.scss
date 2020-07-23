@@ -56,3 +56,16 @@
     -font-family: 'Open Sans', sans-serif;
     color: black;
 }
+
+.search-bar{
+    width: 100%;
+}
+
+.list-padding {
+    padding: 5px;
+}
+
+.fixed-height {
+    max-height: 450px;
+    overflow-y: auto;
+}
