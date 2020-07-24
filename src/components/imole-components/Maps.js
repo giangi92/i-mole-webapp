@@ -1,10 +1,8 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
 import TruckSearchfield from './TruckSearchfield'
-import MapGL, {
-    NavigationControl
-  } from 'react-map-gl';
-
+import CompassControl from 'mapbox-gl-controls/lib/compass';
+import ZoomControl from 'mapbox-gl-controls/lib/zoom';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmVhY2hpZXBwYSIsImEiOiJjazhiejRkbGEwZ3RoM2V0cXoyOWxqbGZnIn0.G7IbIk6wElRVIhWgZREyQg';
 const transportSteps_ = [
@@ -526,7 +524,8 @@ class Maps extends React.Component {
             zoom: this.state.zoom
         });
 
-        //map.addControl();
+        map.addControl(new CompassControl(), 'bottom-right');
+        map.addControl(new ZoomControl(), 'bottom-right');
 
         this.currentMap = map;
         
