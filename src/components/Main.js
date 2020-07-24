@@ -147,7 +147,7 @@ const CoreUserInterface = () => {
                                 <Suspense>
                                     <AppFooter>
                                         <Suspense>
-                                            Giangisoft® - All rights reserved
+                                            Imole® - All rights reserved
                                         </Suspense>
                                     </AppFooter>
                                 </Suspense>

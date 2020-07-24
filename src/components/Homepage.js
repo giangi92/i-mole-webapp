@@ -10,7 +10,7 @@ const Homepage = () => {
     const [successMessage, setSuccessMessage] = useState(false);
     return (
         <div>
-            <h3>Giangisoft Dashboard</h3>
+            <h3>Imole Dashboard</h3>
 
             {/**c-callout */}
             <div className="row">

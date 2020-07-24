@@ -553,8 +553,8 @@ class Maps extends React.Component {
                 "line-cap": "round"
             },
             "paint": {
-                "line-color": "#3b9ddd",
-                "line-width": 8,
+                "line-color": "#FF5533",
+                "line-width": 4,
                 "line-opacity": 0.8
             }
         });
