@@ -530,6 +530,35 @@ class Maps extends React.Component {
         this.currentMap = map;
         
     }
+
+    addRoute(coords, map) {
+        // check if the route is already loaded
+        if (map.getSource('route')) {
+            map.removeLayer('route')
+            map.removeSource('route')
+        } 
+        map.addLayer({
+            "id": "route",
+            "type": "line",
+            "source": {
+                "type": "geojson",
+                "data": {
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": coords
+                }
+            },
+            "layout": {
+                "line-join": "round",
+                "line-cap": "round"
+            },
+            "paint": {
+                "line-color": "#3b9ddd",
+                "line-width": 8,
+                "line-opacity": 0.8
+            }
+        });
+    }
     
     // make a directions request
     getMatch(transportSteps, map) {
@@ -551,6 +580,7 @@ class Maps extends React.Component {
         }
         
         var addWaypoint = this.addWaypoints;
+        var addRoutes = this.addRoute;
         // console.log(pathsString);
         // https://www.mapbox.com/api-documentation/#directions
         var url =
@@ -572,8 +602,7 @@ class Maps extends React.Component {
                 }
             })
             .then(function (data) {
-            console.log({'type': 'geojson',
-                    'data': data});
+            console.log({'data': data});
                     
             map.loadImage(
                 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
@@ -619,7 +648,8 @@ class Maps extends React.Component {
                     'source': 'places',
                     'layout': {
                         'icon-image': 'custom-marker',
-                        'icon-allow-overlap': true
+                        'icon-allow-overlap': true,
+                        'icon-size': 0.25
                     }
                 });
                     
@@ -658,6 +688,8 @@ class Maps extends React.Component {
                         
                         
                 addWaypoint(data.waypoints, transportSteps, map, currentMarkers)
+
+                addRoutes(data.routes[0].geometry, map)
             })                
         }else{
             if (currentMarkers !== null && currentMarkers.length > 0) {
